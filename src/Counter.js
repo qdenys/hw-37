@@ -1,8 +1,9 @@
-// Counter.js
-import React from 'react';
+import React, {Component} from 'react';
 
-const Counter = ({count}) => {
-	return <div>Clicks: {count}</div>;
-};
+class Counter extends Component {
+	render() {
+		return <div>Clicks: {this.props.count}</div>;
+	}
+}
 
 export default Counter;

@@ -1,37 +1,48 @@
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import Smiley from './Smiley';
 import Counter from './Counter';
 
-const App = () => {
-	const [clicks, setClicks] = useState({
-		'😊': 0,
-		'😇': 0,
-		'😍': 0
-	});
+class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			clicks: {
+				'😊': 0,
+				'😇': 0,
+				'😍': 0
+			}
+		};
+	}
 
-	const handleSmileyClick = (symbol) => {
-		setClicks(prevState => ({
-			...prevState,
-			[symbol]: prevState[symbol] + 1
+	handleSmileyClick = (symbol) => {
+		this.setState(prevState => ({
+			clicks: {
+				...prevState.clicks,
+				[symbol]: prevState.clicks[symbol] + 1
+			}
 		}));
-	};
+	}
 
-	const getMaxClickedSmiley = () => {
+	getMaxClickedSmiley = () => {
+		const {clicks} = this.state;
 		const maxClicks = Math.max(...Object.values(clicks));
 		return Object.keys(clicks).find(key => clicks[key] === maxClicks);
-	};
+	}
 
-	return (
-			<div>
-				<Smiley symbol="😊" onClick={() => handleSmileyClick('😊')}/>
-				<Smiley symbol="😇" onClick={() => handleSmileyClick('😇')}/>
-				<Smiley symbol="😍" onClick={() => handleSmileyClick('😍')}/>
-				<Counter count={clicks['😊']}/>
-				<Counter count={clicks['😇']}/>
-				<Counter count={clicks['😍']}/>
-				<button onClick={() => alert(`Winner: ${getMaxClickedSmiley()}`)}>Show Results</button>
-			</div>
-	);
-};
+	render() {
+		const {clicks} = this.state;
+		return (
+				<div>
+					<Smiley symbol="😊" onClick={() => this.handleSmileyClick('😊')}/>
+					<Smiley symbol="😇" onClick={() => this.handleSmileyClick('😇')}/>
+					<Smiley symbol="😍" onClick={() => this.handleSmileyClick('😍')}/>
+					<Counter count={clicks['😊']}/>
+					<Counter count={clicks['😇']}/>
+					<Counter count={clicks['😍']}/>
+					<button onClick={() => alert(`Winner: ${this.getMaxClickedSmiley()}`)}>Show Results</button>
+				</div>
+		);
+	}
+}
 
 export default App;

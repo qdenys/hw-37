@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const Smiley = ({symbol, onClick}) => {
-	return <div onClick={onClick}>{symbol}</div>;
-};
+class Smiley extends Component {
+	render() {
+		return <div onClick={this.props.onClick}>{this.props.symbol}</div>;
+	}
+}
 
 export default Smiley;
